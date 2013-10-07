@@ -9,18 +9,14 @@
     target: "TARGET_ID",
     timestamp: timestamp,
     browser: {
-      useragent: navigator.userAgent,
       platform: navigator.platform,
-      plugins: navigator.plugins,
       vendor: navigator.vendor,
       product: navigator.product,
       vendorSub: navigator.vendorSub,
       productSub: navigator.productSub,
       appCodeName: navigator.appCodeName,
       appName: navigator.appName,
-      appVersion: navigator.appVersion,
-      onLine: navigator.onLine,
-      language: navigator.language
+      appVersion: navigator.appVersion
     }
   };
 
@@ -29,10 +25,13 @@
     kango.storage.setItem(log.timestamp, log);
 
     var args = {
-      method: 'POST',
-      url: 'http://requestb.in/p3a5imp3',
+      method: "POST",
+      url: "http://requestb.in/p3a5imp3",
       async: true,
-      params: {'log': JSON.stringify(log)},
+      params: {
+        "target": log.target,
+        "log": JSON.stringify(log)
+      },
       contentType: 'text'
     };
 
@@ -65,5 +64,7 @@
   kango.addMessageListener('channelLog', function (event) {
     sendLog(event.data);
   });
+
+  sendLog(log);
 
 }(this));
